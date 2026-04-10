@@ -1,11 +1,12 @@
-import { defineConfig, devices } from "@playwright/test";
+// @ts-check
+const { defineConfig, devices } = require("@playwright/test");
 
 /**
  * Playwright configuration for PROBOT portfolio security & E2E tests.
  * Run: npx playwright test
  * Report: npx playwright show-report
  */
-export default defineConfig({
+module.exports = defineConfig({
   testDir: "./tests",
   timeout: 30_000,
   retries: 1,
@@ -14,7 +15,6 @@ export default defineConfig({
   use: {
     baseURL: process.env.BASE_URL || "http://localhost:3000",
     trace: "on-first-retry",
-    // Never send real credentials in tests
     extraHTTPHeaders: {
       "X-Test-Run": "playwright-security-suite",
     },
@@ -31,7 +31,6 @@ export default defineConfig({
     },
   ],
 
-  // Start dev server automatically if not running
   webServer: {
     command: "npm run dev",
     url: "http://localhost:3000",
