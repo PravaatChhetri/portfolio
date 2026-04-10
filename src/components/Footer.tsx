@@ -6,7 +6,7 @@ export function Footer() {
       <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center px-8 md:px-12 py-12">
         <div className="mb-8 md:mb-0">
           <div className="text-white font-black font-headline text-[10px] tracking-widest uppercase mb-2">
-            VANGUARD_OS
+            PROBOT
           </div>
           <div className="text-zinc-600 font-label text-[10px] tracking-widest uppercase">
             © {new Date().getFullYear()} PRAVAAT CHHETRI // ALL_RIGHTS_RESERVED
@@ -29,7 +29,10 @@ export function Footer() {
           >
             LINKEDIN
           </a>
-          <Link href="/contact" className="text-zinc-600 hover:text-white transition-colors">
+          <Link
+            href="/contact"
+            className="text-zinc-600 hover:text-white transition-colors"
+          >
             CONTACT
           </Link>
         </div>

@@ -28,8 +28,8 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "PRAVAAT CHHETRI — VANGUARD_OS",
-    template: "%s — VANGUARD_OS",
+    default: "PRAVAAT CHHETRI — PROBOT",
+    template: "%s — PROBOT",
   },
   description:
     "Software Engineer & IT Officer at Bhutan National Bank. Full-stack developer specializing in Next.js, React Native, Docker, and enterprise banking systems.",
@@ -44,16 +44,16 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Pravaat Chhetri" }],
   openGraph: {
-    title: "PRAVAAT CHHETRI — VANGUARD_OS",
+    title: "PRAVAAT CHHETRI — PROBOT",
     description: "Engineering precision in the void.",
     url: "https://pravaatchhetri.dev",
-    siteName: "VANGUARD_OS",
+    siteName: "PROBOT",
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "PRAVAAT CHHETRI — VANGUARD_OS",
+    title: "PRAVAAT CHHETRI — PROBOT",
     description: "Engineering precision in the void.",
   },
   robots: {

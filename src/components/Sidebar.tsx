@@ -27,7 +27,7 @@ export function Sidebar() {
         className="w-10 h-10 bg-surface-container-high flex items-center justify-center mb-6"
       >
         <span className="font-headline text-[10px] font-black text-white tracking-tighter">
-          V_OS
+          PC
         </span>
       </Link>
 
@@ -55,13 +55,13 @@ export function Sidebar() {
       </div>
 
       {/* Bottom avatar */}
-      <div className="mt-auto">
+      {/* <div className="mt-auto">
         <div className="w-8 h-8 bg-surface-container-high ghost-border flex items-center justify-center">
           <span className="text-[10px] font-headline font-bold text-zinc-400">
             PC
           </span>
         </div>
-      </div>
+      </div> */}
     </nav>
   );
 }

@@ -180,7 +180,7 @@ export function BlogPostContent({
             Back to Intel Feed
           </Link>
           <span className="font-label text-[10px] tracking-widest text-zinc-800 uppercase hidden md:block">
-            VANGUARD_OS // LOG_ENTRY
+            PROBOT // LOG_ENTRY
           </span>
         </div>
       </section>

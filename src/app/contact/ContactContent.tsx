@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import { motion } from "framer-motion";
 import {
   RevealOnScroll,
@@ -33,30 +33,40 @@ export function ContactContent() {
     message: "",
   });
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [currentTime, setCurrentTime] = useState<string | null>(null);
+
+  useEffect(() => {
+    const tick = () =>
+      setCurrentTime(new Date().toISOString().split("T")[1].split(".")[0]);
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, []);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setStatus("sending");
 
     try {
-      const formspreeId = process.env.NEXT_PUBLIC_FORMSPREE_ID;
-      if (formspreeId) {
-        const res = await fetch(`https://formspree.io/f/${formspreeId}`, {
+      const res = await fetch(
+        "https://formsubmit.co/ajax/pravaatchhetri66@gmail.com",
+        {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formState),
-        });
-        if (res.ok) {
-          setStatus("sent");
-          setFormState({ name: "", email: "", message: "" });
-        } else {
-          setStatus("error");
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({
+            name: formState.name,
+            email: formState.email,
+            message: formState.message,
+            _subject: `Portfolio contact from ${formState.name}`,
+            _captcha: "false",
+          }),
         }
-      } else {
-        // Simulate success for development
-        await new Promise((r) => setTimeout(r, 1500));
+      );
+      if (res.ok) {
         setStatus("sent");
         setFormState({ name: "", email: "", message: "" });
+      } else {
+        setStatus("error");
       }
     } catch {
       setStatus("error");
@@ -220,7 +230,7 @@ export function ContactContent() {
                 <div className="space-y-2 font-mono text-xs text-zinc-500">
                   <p>LAT: 27.4728° N</p>
                   <p>LONG: 89.6393° E</p>
-                  <p>TIME: {new Date().toISOString().split("T")[1].split(".")[0]}_UTC</p>
+                  <p>TIME: {currentTime ?? "──:──:──"}_UTC</p>
                 </div>
               </div>
             </RevealOnScroll>

@@ -12,39 +12,85 @@ export function HeroSection() {
     offset: ["start start", "end start"],
   });
 
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
+  const roninY = useTransform(scrollYProgress, [0, 1], ["0%", "45%"]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "60%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
+  const roninOpacity = useTransform(scrollYProgress, [0, 0.55], [1, 0]);
 
   return (
     <section
       ref={ref}
-      className="relative h-screen flex items-center justify-center overflow-hidden"
+      className="relative h-[100svh] min-h-[600px] flex items-center justify-center overflow-hidden"
     >
-      {/* Parallax Background */}
-      <motion.div style={{ y: bgY }} className="absolute inset-0 z-0 scale-110">
+      {/* ── Layer 1: hero-bg.png — deep background, slowest ── */}
+      <motion.div
+        style={{ y: bgY, top: "-15%", left: 0, right: 0, bottom: "-15%" }}
+        className="absolute z-0 pointer-events-none"
+      >
+        <Image
+          src="/hero-bg.png"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-black/50" />
+      </motion.div>
+
+      {/* ── Layer 2: ronin cutout — mid layer, faster ── */}
+      {/* Hidden on small phones, visible from sm up, positioned right on tablet+ */}
+      <motion.div
+        style={{ y: roninY, opacity: roninOpacity }}
+        className="absolute z-[1] pointer-events-none
+          block
+          bottom-0 left-1/2 -translate-x-1/2
+          sm:left-auto sm:translate-x-0 sm:right-0
+          w-[90vw] sm:w-[52vw] md:w-[52vw] lg:w-[52vw] xl:w-[48vw]
+          h-[80%] sm:h-[90%] md:h-[100%]"
+      >
         <Image
           src="/ronin.png"
           alt=""
           fill
           priority
-          className="object-cover object-center lg:object-top"
+          sizes="(max-width: 640px) 115vw, (max-width: 768px) 115vw, 115vw"
+          className="object-contain object-bottom"
         />
-        <div className="absolute inset-0 bg-black/60" />
       </motion.div>
 
-      {/* Content */}
+      {/* ── Content — left-aligned on tablet+, centered on mobile ── */}
       <motion.div
         style={{ y: textY, opacity }}
-        className="relative z-10 text-center px-6"
+        className="relative z-10 w-full px-6 sm:px-10 md:px-16 lg:px-24
+          text-center sm:text-left
+          max-w-none sm:max-w-[60%] md:max-w-[55%] lg:max-w-[50%]
+          sm:ml-0"
       >
-        {/* Main Title */}
-        <div className="overflow-hidden mb-4">
+        {/* Name tag — visible on mobile only */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          className="font-label text-[14px] md:text-[20px] tracking-[0.3em] text-neutral-100 uppercase mb-4 "
+        >
+          PRAVAAT CHHETRI
+        </motion.p>
+
+        {/* Main title */}
+        <div className="overflow-hidden mb-1">
           <motion.h1
             initial={{ y: "100%" }}
             animate={{ y: "0%" }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-            className="font-headline text-[12vw] md:text-[8rem] lg:text-[10rem] leading-[0.85] tracking-tighter uppercase text-white font-black text-glow"
+            className="font-headline font-black text-glow uppercase leading-[0.85] tracking-tighter text-white
+              text-[17vw]
+              xs:text-[15vw]
+              sm:text-[11vw]
+              md:text-[9vw]
+              lg:text-[8rem]
+              xl:text-[9rem]"
           >
             DIGITAL
           </motion.h1>
@@ -54,9 +100,15 @@ export function HeroSection() {
             initial={{ y: "100%" }}
             animate={{ y: "0%" }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.35 }}
-            className="font-headline text-[12vw] md:text-[8rem] lg:text-[10rem] leading-[0.85] tracking-tighter uppercase text-white font-black text-glow"
+            className="font-headline font-black text-glow uppercase leading-[0.85] tracking-tighter text-white
+              text-[17vw]
+              xs:text-[15vw]
+              sm:text-[11vw]
+              md:text-[9vw]
+              lg:text-[8rem]
+              xl:text-[9rem]"
           >
-            SAMURAI
+            RONIN
           </motion.h1>
         </div>
 
@@ -65,50 +117,53 @@ export function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.8 }}
-          className="font-label text-zinc-400 tracking-void uppercase mt-6 mb-14 text-sm md:text-base"
+          className="font-label text-zinc-400 tracking-widest uppercase mt-5 mb-10 text-[10px] sm:text-xs md:text-sm"
         >
           Engineering precision in the void
         </motion.p>
 
         {/* CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.1 }}
-          className="flex justify-center"
+          className="flex justify-center sm:justify-start"
         >
           <Link
             href="#projects"
-            className="group flex items-center gap-4 border border-white/20 px-10 py-5 hover:bg-white hover:text-black transition-all duration-300"
+            className="group inline-flex items-center gap-3
+              border border-white/20 px-6 py-4 sm:px-8 sm:py-4 md:px-10 md:py-5
+              text-xs sm:text-sm
+              hover:bg-white hover:text-black transition-all duration-300"
           >
-            <span className="font-headline tracking-widest uppercase text-sm">
+            <span className="font-headline tracking-widest uppercase">
               Enter the Archive
             </span>
-            <span className="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">
+            <span className="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">
               arrow_forward
             </span>
           </Link>
         </motion.div>
       </motion.div>
 
-      {/* Scroll Indicator */}
+      {/* Scroll indicator — tucked up on short screens */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.3 }}
         transition={{ delay: 1.5 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4"
+        className="absolute bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
       >
-        <span className="font-label text-[10px] tracking-widest uppercase">
+        <span className="font-label text-[9px] tracking-widest uppercase">
           Scroll
         </span>
         <motion.div
-          animate={{ height: [0, 64, 0] }}
+          animate={{ height: [0, 48, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           className="w-px bg-white/50"
         />
       </motion.div>
 
-      {/* Side label */}
+      {/* Side label — desktop only */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

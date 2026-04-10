@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -15,6 +15,13 @@ const NAV_LINKS = [
 export function Navbar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
@@ -24,12 +31,12 @@ export function Navbar() {
   return (
     <>
       {/* Desktop Nav */}
-      <nav className="fixed top-0 w-full z-50 frosted-obsidian">
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? "frosted-obsidian" : "bg-transparent"}`}>
         <div className="flex justify-between items-center w-full px-8 md:px-12 py-5 max-w-[1440px] mx-auto">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3">
             <span className="text-xl font-black tracking-tighter text-white font-headline uppercase">
-              VANGUARD_OS
+              PROBOT
             </span>
           </Link>
 
@@ -39,10 +46,12 @@ export function Navbar() {
               <Link
                 key={link.id}
                 href={link.href}
-                className={`font-headline tracking-tighter uppercase text-sm font-bold transition-colors duration-100 ${
+                className={`font-headline tracking-tighter uppercase text-sm font-bold transition-all duration-300 ${
                   isActive(link.href)
                     ? "text-white border-b-2 border-white pb-1"
-                    : "text-zinc-500 hover:text-zinc-200"
+                    : scrolled
+                    ? "text-zinc-500 hover:text-zinc-200"
+                    : "text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] hover:drop-shadow-[0_0_14px_rgba(255,255,255,1)]"
                 }`}
               >
                 {link.label}
@@ -77,7 +86,9 @@ export function Navbar() {
               className="block w-6 h-px bg-white"
             />
             <motion.span
-              animate={mobileOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
+              animate={
+                mobileOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }
+              }
               className="block w-6 h-px bg-white"
             />
           </button>

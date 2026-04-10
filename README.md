@@ -1,4 +1,4 @@
-# VANGUARD_OS — Pravaat Chhetri Portfolio
+# PROBOT — Pravaat Chhetri Portfolio
 
 A brutalist, monochrome developer portfolio built with **Next.js 14**, **Tailwind CSS**, **Framer Motion**, and **Notion as a headless CMS**.
 

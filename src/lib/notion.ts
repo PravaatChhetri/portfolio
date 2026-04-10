@@ -137,38 +137,10 @@ export async function getProjects(): Promise<Project[]> {
 export async function getProjectBySlug(
   slug: string
 ): Promise<Project | null> {
-  const dbId = process.env.NOTION_PROJECTS_DB;
-  if (!dbId) return getFallbackProjects().find((p) => p.slug === slug) || null;
-
+  // Reuse getProjects() and filter in-memory — avoids rich_text filter API quirks
   try {
-    const response = await notion.databases.query({
-      database_id: dbId,
-      filter: {
-        property: "Slug",
-        rich_text: { equals: slug },
-      },
-    });
-
-    if (response.results.length === 0) return null;
-
-    const p = response.results[0] as PageObjectResponse;
-    return {
-      id: p.id,
-      slug: extractProperty(p, "Slug") || p.id,
-      title: extractProperty(p, "Title") || "Untitled",
-      tagline: extractProperty(p, "Tagline") || "",
-      description: extractProperty(p, "Description") || "",
-      category: extractProperty(p, "Category") || "",
-      techStack: extractProperty(p, "Tech Stack") || [],
-      coverImage: extractProperty(p, "Cover") || "",
-      liveUrl: extractProperty(p, "Live URL") || "",
-      githubUrl: extractProperty(p, "GitHub URL") || "",
-      featured: extractProperty(p, "Featured") || false,
-      order: extractProperty(p, "Order") || 0,
-      specs: {},
-      challenge: extractProperty(p, "Challenge") || "",
-      solution: extractProperty(p, "Solution") || "",
-    };
+    const all = await getProjects();
+    return all.find((p) => p.slug === slug) || null;
   } catch (error) {
     console.error("Notion project fetch failed:", error);
     return getFallbackProjects().find((p) => p.slug === slug) || null;

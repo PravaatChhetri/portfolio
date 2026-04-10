@@ -1,5 +1,8 @@
 "use client";
 
+import Image from "next/image";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { RevealOnScroll, StaggerContainer, StaggerItem } from "@/components/Animations";
 
 const PASSIONS = [
@@ -24,20 +27,32 @@ const PASSIONS = [
 ];
 
 export function PassionsSection() {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
+
   return (
     <section
-      className="py-48 px-8 md:px-12 bg-surface-container-lowest relative overflow-hidden"
+      ref={ref}
+      className="py-48 px-8 md:px-12 relative overflow-hidden"
       id="passions"
     >
-      {/* Subtle grid texture */}
-      <div
-        className="absolute inset-0 opacity-[0.02] pointer-events-none"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
-        }}
-      />
+      {/* Parallax background */}
+      <motion.div
+        style={{ y: bgY, top: "-20%", left: 0, right: 0, bottom: "-20%" }}
+        className="absolute z-0 pointer-events-none"
+      >
+        <Image
+          src="/footer-bg.png"
+          alt=""
+          fill
+          className="object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-black/70" />
+      </motion.div>
 
       <div className="max-w-5xl mx-auto relative z-10 text-center">
         <RevealOnScroll>
