@@ -5,6 +5,10 @@
 
 # testing
 /coverage
+/tests
+playwright.config.*
+playwright-report/
+test-results/
 
 # next.js
 /.next/
