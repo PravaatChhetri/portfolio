@@ -1,0 +1,246 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── BASE RESETS ─── */
+:root {
+  --color-surface: #131313;
+  --color-surface-dim: #131313;
+  --color-surface-bright: #3a3939;
+  --color-surface-container: #201f1f;
+  --color-surface-container-low: #1c1b1b;
+  --color-surface-container-high: #2a2a2a;
+  --color-surface-container-highest: #353534;
+  --color-surface-container-lowest: #0e0e0e;
+  --color-on-surface: #e5e2e1;
+  --color-primary: #ffffff;
+  --color-on-primary: #1a1c1c;
+  --color-outline-variant: #474747;
+}
+
+* {
+  border-radius: 0px !important;
+}
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: #2a2a2a #131313;
+}
+
+body {
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: #ffffff;
+  color: #131313;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #131313;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2a2a2a;
+}
+
+/* ─── TYPOGRAPHY UTILITIES ─── */
+.text-glow {
+  text-shadow: 0 0 40px rgba(255, 255, 255, 0.15), 0 0 80px rgba(255, 255, 255, 0.05);
+}
+
+.text-glow-strong {
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3), 0 0 60px rgba(255, 255, 255, 0.1);
+}
+
+/* ─── FROSTED OBSIDIAN ─── */
+.frosted-obsidian {
+  background: rgba(19, 19, 19, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* ─── PARALLAX ─── */
+.parallax-bg {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@media (max-width: 768px) {
+  .parallax-bg {
+    background-attachment: scroll;
+  }
+}
+
+/* ─── GHOST BORDER (accessibility fallback) ─── */
+.ghost-border {
+  border: 1px solid rgba(71, 71, 71, 0.15);
+}
+
+/* ─── AMBIENT SHADOW (no traditional drop shadows) ─── */
+.ambient-shadow {
+  box-shadow: 0 0 64px rgba(229, 226, 225, 0.04);
+}
+
+/* ─── SCROLLBAR HIDE ─── */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ─── TERMINAL CURSOR ─── */
+.terminal-cursor::after {
+  content: "▊";
+  animation: blink 1s step-end infinite;
+  color: #ffffff;
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ─── CODE BLOCKS ─── */
+pre code {
+  font-family: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
+}
+
+/* ─── LINE ANIMATION ─── */
+.line-reveal {
+  position: relative;
+  overflow: hidden;
+}
+
+.line-reveal::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: #ffffff;
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.line-reveal:hover::after {
+  width: 100%;
+}
+
+/* ─── GRAYSCALE IMAGE TREATMENT ─── */
+.project-image {
+  filter: grayscale(100%) brightness(0.5);
+  transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.group:hover .project-image {
+  filter: grayscale(100%) brightness(0.7);
+  transform: scale(1.05);
+}
+
+/* ─── VERTICAL TEXT ─── */
+.vertical-text {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+/* ─── NOTION RICH TEXT ─── */
+.notion-content h1 {
+  font-family: var(--font-space-grotesk);
+  font-size: 2.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  margin-bottom: 1.5rem;
+}
+
+.notion-content h2 {
+  font-family: var(--font-space-grotesk);
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+
+.notion-content p {
+  font-family: var(--font-inter);
+  color: #a1a1a1;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+  max-width: 42rem;
+}
+
+.notion-content code {
+  font-family: var(--font-jetbrains-mono), monospace;
+  background: #0e0e0e;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.85rem;
+  color: #c8c6c6;
+}
+
+.notion-content pre {
+  background: #0e0e0e;
+  border: 1px solid rgba(71, 71, 71, 0.3);
+  padding: 1.5rem;
+  overflow-x: auto;
+  margin: 2rem 0;
+}
+
+.notion-content pre code {
+  background: transparent;
+  padding: 0;
+  font-size: 0.8rem;
+  color: #919191;
+}
+
+.notion-content ul,
+.notion-content ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #a1a1a1;
+}
+
+.notion-content li {
+  margin-bottom: 0.5rem;
+  line-height: 1.7;
+}
+
+.notion-content blockquote {
+  border-left: 4px solid #ffffff;
+  padding: 1.5rem;
+  background: #1c1b1b;
+  margin: 2rem 0;
+  font-style: italic;
+  color: #c8c6c6;
+}
+
+.notion-content a {
+  color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: opacity 0.2s;
+}
+
+.notion-content a:hover {
+  opacity: 0.7;
+}
