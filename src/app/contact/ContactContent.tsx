@@ -16,7 +16,7 @@ const SOCIAL_LINKS = [
   },
   {
     label: "LINKEDIN",
-    url: "https://linkedin.com/in/pravaat-chhetri-717a05232",
+    url: "https://linkedin.com/in/pravaat-chhetri",
     icon: "share",
   },
   {
@@ -32,7 +32,9 @@ export function ContactContent() {
     email: "",
     message: "",
   });
-  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
+    "idle",
+  );
   const [currentTime, setCurrentTime] = useState<string | null>(null);
 
   useEffect(() => {
@@ -49,10 +51,13 @@ export function ContactContent() {
 
     try {
       const res = await fetch(
-        "https://formsubmit.co/ajax/pravaatchhetri66@gmail.com",
+        "https://formsubmit.co/ajax/2768805d950a902b30b9cc19a59d2bd7",
         {
           method: "POST",
-          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
           body: JSON.stringify({
             name: formState.name,
             email: formState.email,
@@ -60,7 +65,7 @@ export function ContactContent() {
             _subject: `Portfolio contact from ${formState.name}`,
             _captcha: "false",
           }),
-        }
+        },
       );
       if (res.ok) {
         setStatus("sent");

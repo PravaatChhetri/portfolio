@@ -81,7 +81,7 @@ export default function RootLayout({
       <body className="bg-background text-on-surface font-body antialiased">
         <Navbar />
         <Sidebar />
-        <main className="lg:pl-16">{children}</main>
+        <main className="lg:pl-16 pb-[72px] lg:pb-0">{children}</main>
         <Footer />
       </body>
     </html>
