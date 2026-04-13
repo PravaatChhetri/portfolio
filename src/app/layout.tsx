@@ -28,7 +28,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://pravaatchhetri.dev"),
+  metadataBase: new URL("https://pravaat-chhetri.vercel.app"),
   title: {
     default:
       "Pravaat Chhetri — Software Engineer & Full Stack Developer | Thimphu, Bhutan",
@@ -58,7 +58,9 @@ export const metadata: Metadata = {
     "Software Engineer for hire",
     "PROBOT developer",
   ],
-  authors: [{ name: "Pravaat Chhetri", url: "https://pravaatchhetri.dev" }],
+  authors: [
+    { name: "Pravaat Chhetri", url: "https://pravaat-chhetri.vercel.app" },
+  ],
   creator: "Pravaat Chhetri",
   publisher: "Pravaat Chhetri",
   robots: {
@@ -76,8 +78,8 @@ export const metadata: Metadata = {
     title:
       "Pravaat Chhetri — Software Engineer & Full Stack Developer | Bhutan",
     description:
-      "IT Officer at Bhutan National Bank. Building enterprise banking systems, AI platforms, and scalable full-stack applications with Next.js, React Native, and TypeScript. Open to freelance work.",
-    url: "https://pravaatchhetri.dev",
+      "Project Officer (Full Stack Developer) at Bhutan National Bank. Building enterprise banking systems, AI platforms, and scalable full-stack applications with Next.js, React Native, and TypeScript. Open to freelance work.",
+    url: "https://pravaat-chhetri.vercel.app",
     siteName: "Pravaat Chhetri — PROBOT",
     locale: "en_US",
     type: "website",
@@ -87,11 +89,16 @@ export const metadata: Metadata = {
     title:
       "Pravaat Chhetri — Software Engineer & Full Stack Developer | Bhutan",
     description:
-      "IT Officer at Bhutan National Bank. Next.js, React Native, AI & enterprise systems developer. Open to freelance work.",
+      "Project Officer (Full Stack Developer) at Bhutan National Bank. Next.js, React Native, AI & enterprise systems developer. Open to freelance work.",
     creator: "@pravaat",
   },
   alternates: {
-    canonical: "https://pravaatchhetri.dev",
+    canonical: "https://pravaat-chhetri.vercel.app",
+  },
+  verification: {
+    google: "o63EwyNpFF1QjMfP4SMBTGjVD71lfbTBTPy9U2kpwYE",
+    // yandex: "PASTE_IF_NEEDED",
+    // bing verification is done via XML file in /public, not meta tag
   },
 };
 
@@ -109,6 +116,10 @@ export default function RootLayout({
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        />
+        <meta
+          name="google-site-verification"
+          content="o63EwyNpFF1QjMfP4SMBTGjVD71lfbTBTPy9U2kpwYE"
         />
       </head>
       <body className="bg-background text-on-surface font-body antialiased">
