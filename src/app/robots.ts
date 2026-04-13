@@ -18,7 +18,7 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: "Applebot-Extended", allow: "/" },
       { userAgent: "cohere-ai", allow: "/" },
     ],
-    sitemap: "https://pravaatchhetri.dev/sitemap.xml",
-    host: "https://pravaatchhetri.dev",
+    sitemap: "https://pravaat-chhetri.vercel.app/sitemap.xml",
+    host: "https://pravaat-chhetri.vercel.app",
   };
 }

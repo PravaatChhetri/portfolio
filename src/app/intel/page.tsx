@@ -7,12 +7,12 @@ export const metadata = {
   title: "Journal — Engineering Articles & Technical Writing",
   description:
     "Technical articles, architecture decisions, and engineering deep-dives by Pravaat Chhetri — covering Docker, Next.js, AI/ML pipelines, enterprise systems, and full-stack development.",
-  alternates: { canonical: "https://pravaatchhetri.dev/intel" },
+  alternates: { canonical: "https://pravaat-chhetri.vercel.app/intel" },
   openGraph: {
     title: "Journal — Engineering Articles by Pravaat Chhetri",
     description:
       "Technical writing on Docker, Next.js, AI detection pipelines, and enterprise banking systems by Pravaat Chhetri, Software Engineer.",
-    url: "https://pravaatchhetri.dev/intel",
+    url: "https://pravaat-chhetri.vercel.app/intel",
     type: "website",
   },
 };

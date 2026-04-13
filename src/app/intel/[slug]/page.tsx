@@ -20,7 +20,7 @@ export async function generateMetadata({
   const posts = await getBlogPosts();
   const post = posts.find((p) => p.slug === slug);
   if (!post) return { title: "Not Found" };
-  const url = `https://pravaatchhetri.dev/intel/${slug}`;
+  const url = `https://pravaat-chhetri.vercel.app/intel/${slug}`;
   return {
     title: post.title,
     description: post.excerpt,
@@ -49,13 +49,13 @@ export default async function BlogPostPage({
 
   const blocks = await getPageBlocks(post.id);
 
-  const url = `https://pravaatchhetri.dev/intel/${slug}`;
+  const url = `https://pravaat-chhetri.vercel.app/intel/${slug}`;
   return (
     <>
       <BreadcrumbJsonLd
         items={[
-          { name: "Home", url: "https://pravaatchhetri.dev" },
-          { name: "Journal", url: "https://pravaatchhetri.dev/intel" },
+          { name: "Home", url: "https://pravaat-chhetri.vercel.app" },
+          { name: "Journal", url: "https://pravaat-chhetri.vercel.app/intel" },
           { name: post.title, url },
         ]}
       />

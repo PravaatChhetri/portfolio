@@ -13,14 +13,14 @@ export const metadata: Metadata = {
   description:
     "Pravaat Chhetri is a Software Engineer and IT Officer at Bhutan National Bank, Thimphu, Bhutan. Expert in Next.js, React Native, TypeScript, AI/ML integration, and enterprise banking systems. B.E. IT graduate with 4+ years of building production systems. Open to freelance and remote work.",
   alternates: {
-    canonical: "https://pravaatchhetri.dev",
+    canonical: "https://pravaat-chhetri.vercel.app",
   },
   openGraph: {
     title:
       "Pravaat Chhetri — Software Engineer, AI Engineer & Full Stack Developer",
     description:
       "IT Officer at Bhutan National Bank. Building enterprise banking systems, AI platforms, and scalable full-stack apps with Next.js, React Native, and TypeScript. Open to freelance work.",
-    url: "https://pravaatchhetri.dev",
+    url: "https://pravaat-chhetri.vercel.app",
     type: "website",
   },
 };

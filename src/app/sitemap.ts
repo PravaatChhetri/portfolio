@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getProjects, getBlogPosts } from "@/lib/notion";
 
-const BASE_URL = "https://pravaatchhetri.dev";
+const BASE_URL = "https://pravaat-chhetri.vercel.app";
 
 export const revalidate = 3600;
 

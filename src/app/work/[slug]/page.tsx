@@ -19,7 +19,7 @@ export async function generateMetadata({
   const project = await getProjectBySlug(slug);
   if (!project) return { title: "Project Not Found" };
 
-  const url = `https://pravaatchhetri.dev/work/${slug}`;
+  const url = `https://pravaat-chhetri.vercel.app/work/${slug}`;
   return {
     title: `${project.title} — Case Study`,
     description: `${project.tagline} Built by Pravaat Chhetri using ${project.techStack.slice(0, 4).join(", ")}.`,
@@ -50,13 +50,13 @@ export default async function CaseStudyPage({
     // Fall back to structured data
   }
 
-  const url = `https://pravaatchhetri.dev/work/${slug}`;
+  const url = `https://pravaat-chhetri.vercel.app/work/${slug}`;
   return (
     <>
       <BreadcrumbJsonLd
         items={[
-          { name: "Home", url: "https://pravaatchhetri.dev" },
-          { name: "Projects", url: "https://pravaatchhetri.dev/work" },
+          { name: "Home", url: "https://pravaat-chhetri.vercel.app" },
+          { name: "Projects", url: "https://pravaat-chhetri.vercel.app/work" },
           { name: project.title, url },
         ]}
       />

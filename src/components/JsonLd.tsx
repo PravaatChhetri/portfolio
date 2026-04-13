@@ -6,11 +6,11 @@
 const PERSON_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "Person",
-  "@id": "https://pravaatchhetri.dev/#person",
+  "@id": "https://pravaat-chhetri.vercel.app/#person",
   name: "Pravaat Chhetri",
   alternateName: "PROBOT",
-  url: "https://pravaatchhetri.dev",
-  image: "https://pravaatchhetri.dev/ronin.png",
+  url: "https://pravaat-chhetri.vercel.app",
+  image: "https://pravaat-chhetri.vercel.app/ronin.png",
   jobTitle: "Software Engineer",
   description:
     "Software Engineer and IT Officer at Bhutan National Bank. Full-stack developer specializing in Next.js, React Native, TypeScript, AI/ML integration, Docker, and enterprise banking systems. B.E. in Information Technology from the Royal University of Bhutan. Available for freelance and remote software engineering projects.",
@@ -76,17 +76,17 @@ const PERSON_SCHEMA = {
 const WEBSITE_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "@id": "https://pravaatchhetri.dev/#website",
-  url: "https://pravaatchhetri.dev",
+  "@id": "https://pravaat-chhetri.vercel.app/#website",
+  url: "https://pravaat-chhetri.vercel.app",
   name: "Pravaat Chhetri — Software Engineer",
   description:
     "Portfolio of Pravaat Chhetri — Software Engineer, AI Engineer, and Full Stack Developer based in Thimphu, Bhutan.",
-  author: { "@id": "https://pravaatchhetri.dev/#person" },
+  author: { "@id": "https://pravaat-chhetri.vercel.app/#person" },
   potentialAction: {
     "@type": "SearchAction",
     target: {
       "@type": "EntryPoint",
-      urlTemplate: "https://pravaatchhetri.dev/intel?q={search_term_string}",
+      urlTemplate: "https://pravaat-chhetri.vercel.app/intel?q={search_term_string}",
     },
     "query-input": "required name=search_term_string",
   },
@@ -95,10 +95,10 @@ const WEBSITE_SCHEMA = {
 const PROFILE_PAGE_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "ProfilePage",
-  "@id": "https://pravaatchhetri.dev/#profilepage",
-  url: "https://pravaatchhetri.dev",
+  "@id": "https://pravaat-chhetri.vercel.app/#profilepage",
+  url: "https://pravaat-chhetri.vercel.app",
   name: "Pravaat Chhetri — Software Engineer Portfolio",
-  mainEntity: { "@id": "https://pravaatchhetri.dev/#person" },
+  mainEntity: { "@id": "https://pravaat-chhetri.vercel.app/#person" },
 };
 
 export function RootJsonLd() {
@@ -166,8 +166,8 @@ export function ArticleJsonLd({
     datePublished: publishedAt,
     url,
     keywords: tags.join(", "),
-    author: { "@id": "https://pravaatchhetri.dev/#person" },
-    publisher: { "@id": "https://pravaatchhetri.dev/#person" },
+    author: { "@id": "https://pravaat-chhetri.vercel.app/#person" },
+    publisher: { "@id": "https://pravaat-chhetri.vercel.app/#person" },
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
   };
   return (
@@ -197,7 +197,7 @@ export function ProjectJsonLd({
     url,
     applicationCategory: "BusinessApplication",
     keywords: techStack.join(", "),
-    author: { "@id": "https://pravaatchhetri.dev/#person" },
+    author: { "@id": "https://pravaat-chhetri.vercel.app/#person" },
     programmingLanguage: techStack,
   };
   return (

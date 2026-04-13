@@ -117,10 +117,6 @@ export default function RootLayout({
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         />
-        <meta
-          name="google-site-verification"
-          content="o63EwyNpFF1QjMfP4SMBTGjVD71lfbTBTPy9U2kpwYE"
-        />
       </head>
       <body className="bg-background text-on-surface font-body antialiased">
         <RootJsonLd />
