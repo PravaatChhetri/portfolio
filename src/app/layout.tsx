@@ -3,6 +3,7 @@ import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import { Navbar } from "@/components/Navbar";
 import { Sidebar } from "@/components/Sidebar";
 import { Footer } from "@/components/Footer";
+import { RootJsonLd } from "@/components/JsonLd";
 import "@/styles/globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -27,38 +28,70 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://pravaatchhetri.dev"),
   title: {
-    default: "PRAVAAT CHHETRI — PROBOT",
-    template: "%s — PROBOT",
+    default:
+      "Pravaat Chhetri — Software Engineer & Full Stack Developer | Thimphu, Bhutan",
+    template: "%s | Pravaat Chhetri",
   },
   description:
-    "Software Engineer & IT Officer at Bhutan National Bank. Full-stack developer specializing in Next.js, React Native, Docker, and enterprise banking systems.",
+    "Pravaat Chhetri is a Software Engineer and IT Officer at Bhutan National Bank, specializing in Next.js, React Native, TypeScript, AI/ML integration, Docker, and enterprise banking systems. Available for freelance projects.",
   keywords: [
     "Pravaat Chhetri",
-    "Software Engineer",
-    "Bhutan",
-    "Full Stack Developer",
-    "Next.js",
-    "React Native",
-    "BNBL",
+    "Software Engineer Bhutan",
+    "Full Stack Developer Bhutan",
+    "AI Engineer Bhutan",
+    "Next.js Developer",
+    "React Developer",
+    "React Native Developer",
+    "TypeScript Developer",
+    "Node.js Developer",
+    "Python Developer",
+    "Enterprise Software Engineer",
+    "Banking Software Engineer",
+    "Freelance Developer Bhutan",
+    "IT Officer Bhutan National Bank",
+    "Full Stack Engineer for hire",
+    "Web Developer Thimphu",
+    "AI Integration Developer",
+    "Docker Developer",
+    "Software Engineer for hire",
+    "PROBOT developer",
   ],
-  authors: [{ name: "Pravaat Chhetri" }],
+  authors: [{ name: "Pravaat Chhetri", url: "https://pravaatchhetri.dev" }],
+  creator: "Pravaat Chhetri",
+  publisher: "Pravaat Chhetri",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   openGraph: {
-    title: "PRAVAAT CHHETRI — PROBOT",
-    description: "Engineering precision in the void.",
+    title:
+      "Pravaat Chhetri — Software Engineer & Full Stack Developer | Bhutan",
+    description:
+      "IT Officer at Bhutan National Bank. Building enterprise banking systems, AI platforms, and scalable full-stack applications with Next.js, React Native, and TypeScript. Open to freelance work.",
     url: "https://pravaatchhetri.dev",
-    siteName: "PROBOT",
+    siteName: "Pravaat Chhetri — PROBOT",
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "PRAVAAT CHHETRI — PROBOT",
-    description: "Engineering precision in the void.",
+    title:
+      "Pravaat Chhetri — Software Engineer & Full Stack Developer | Bhutan",
+    description:
+      "IT Officer at Bhutan National Bank. Next.js, React Native, AI & enterprise systems developer. Open to freelance work.",
+    creator: "@pravaat",
   },
-  robots: {
-    index: true,
-    follow: true,
+  alternates: {
+    canonical: "https://pravaatchhetri.dev",
   },
 };
 
@@ -79,6 +112,7 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-background text-on-surface font-body antialiased">
+        <RootJsonLd />
         <Navbar />
         <Sidebar />
         <main className="lg:pl-16 pb-[72px] lg:pb-0">{children}</main>

@@ -1,6 +1,7 @@
 import { getProjects, getProjectBySlug, getPageBlocks } from "@/lib/notion";
 import { notFound } from "next/navigation";
 import { CaseStudyContent } from "./CaseStudyContent";
+import { BreadcrumbJsonLd, ProjectJsonLd } from "@/components/JsonLd";
 
 export const revalidate = 3600;
 
@@ -9,14 +10,26 @@ export async function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
   const project = await getProjectBySlug(slug);
   if (!project) return { title: "Project Not Found" };
 
+  const url = `https://pravaatchhetri.dev/work/${slug}`;
   return {
     title: `${project.title} — Case Study`,
-    description: project.tagline,
+    description: `${project.tagline} Built by Pravaat Chhetri using ${project.techStack.slice(0, 4).join(", ")}.`,
+    alternates: { canonical: url },
+    openGraph: {
+      title: `${project.title} — Case Study | Pravaat Chhetri`,
+      description: project.tagline,
+      url,
+      type: "article",
+    },
   };
 }
 
@@ -37,5 +50,23 @@ export default async function CaseStudyPage({
     // Fall back to structured data
   }
 
-  return <CaseStudyContent project={project} blocks={blocks} />;
+  const url = `https://pravaatchhetri.dev/work/${slug}`;
+  return (
+    <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "https://pravaatchhetri.dev" },
+          { name: "Projects", url: "https://pravaatchhetri.dev/work" },
+          { name: project.title, url },
+        ]}
+      />
+      <ProjectJsonLd
+        title={project.title}
+        description={project.tagline}
+        url={url}
+        techStack={project.techStack}
+      />
+      <CaseStudyContent project={project} blocks={blocks} />
+    </>
+  );
 }

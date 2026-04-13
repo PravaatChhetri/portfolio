@@ -1,6 +1,7 @@
 import { getBlogPosts, getPageBlocks } from "@/lib/notion";
 import { notFound } from "next/navigation";
 import { BlogPostContent } from "./BlogPostContent";
+import { ArticleJsonLd, BreadcrumbJsonLd } from "@/components/JsonLd";
 import type { Metadata } from "next";
 
 export const revalidate = 3600;
@@ -19,9 +20,20 @@ export async function generateMetadata({
   const posts = await getBlogPosts();
   const post = posts.find((p) => p.slug === slug);
   if (!post) return { title: "Not Found" };
+  const url = `https://pravaatchhetri.dev/intel/${slug}`;
   return {
     title: post.title,
     description: post.excerpt,
+    alternates: { canonical: url },
+    openGraph: {
+      title: `${post.title} | Pravaat Chhetri`,
+      description: post.excerpt,
+      url,
+      type: "article",
+      publishedTime: post.publishedAt,
+      authors: ["Pravaat Chhetri"],
+      tags: post.tags,
+    },
   };
 }
 
@@ -37,5 +49,24 @@ export default async function BlogPostPage({
 
   const blocks = await getPageBlocks(post.id);
 
-  return <BlogPostContent post={post} blocks={blocks} />;
+  const url = `https://pravaatchhetri.dev/intel/${slug}`;
+  return (
+    <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "https://pravaatchhetri.dev" },
+          { name: "Journal", url: "https://pravaatchhetri.dev/intel" },
+          { name: post.title, url },
+        ]}
+      />
+      <ArticleJsonLd
+        title={post.title}
+        description={post.excerpt}
+        publishedAt={post.publishedAt}
+        url={url}
+        tags={post.tags}
+      />
+      <BlogPostContent post={post} blocks={blocks} />
+    </>
+  );
 }

@@ -22,7 +22,15 @@ export function HeroSection() {
     <section
       ref={ref}
       className="relative h-[100svh] min-h-[600px] flex items-center justify-center overflow-hidden"
+      aria-label="Pravaat Chhetri — Software Engineer & Full Stack Developer"
     >
+      {/* SEO landmark: visible to crawlers and screen readers, hidden visually */}
+      <h1 className="sr-only">
+        Pravaat Chhetri — Software Engineer, AI Engineer &amp; Full Stack
+        Developer based in Thimphu, Bhutan. IT Officer at Bhutan National Bank.
+        Available for freelance Next.js, React Native, TypeScript, and
+        enterprise software projects.
+      </h1>
       {/* ── Layer 1: hero-bg.png — deep background, slowest ── */}
       <motion.div
         style={{ y: bgY, top: "-15%", left: 0, right: 0, bottom: "-15%" }}
