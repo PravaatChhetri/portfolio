@@ -4,6 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import { Sidebar } from "@/components/Sidebar";
 import { Footer } from "@/components/Footer";
 import { RootJsonLd } from "@/components/JsonLd";
+import { Analytics } from "@vercel/analytics/next";
 import "@/styles/globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -128,6 +129,7 @@ export default function RootLayout({
         <Sidebar />
         <main className="lg:pl-16 pb-[72px] lg:pb-0">{children}</main>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );
