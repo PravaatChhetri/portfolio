@@ -112,14 +112,19 @@ export function WorkArchiveContent({ projects }: { projects: Project[] }) {
                       {/* Hover overlay */}
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-500" />
 
-                      {/* Featured badge */}
-                      {project.featured && (
-                        <div className="absolute top-4 left-4">
+                      {/* Badges */}
+                      <div className="absolute top-4 left-4 flex flex-col gap-1.5">
+                        {project.featured && (
                           <span className="bg-white text-black font-label text-[9px] tracking-widest uppercase px-2 py-1">
                             FEATURED
                           </span>
-                        </div>
-                      )}
+                        )}
+                        {project.systemDesignUrl && (
+                          <span className="bg-zinc-900/80 backdrop-blur-sm text-zinc-400 font-label text-[9px] tracking-widest uppercase px-2 py-1 border border-zinc-800">
+                            SYSTEM DESIGN
+                          </span>
+                        )}
+                      </div>
 
                       {/* Arrow */}
                       <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -148,15 +153,23 @@ export function WorkArchiveContent({ projects }: { projects: Project[] }) {
                         <span className="font-label text-[9px] tracking-widest text-zinc-700 uppercase">
                           {project.category}
                         </span>
-                        <div className="flex flex-wrap gap-2 justify-end">
-                          {project.techStack.slice(0, 3).map((tech) => (
-                            <span
-                              key={tech}
-                              className="font-label text-[9px] tracking-widest text-zinc-700 uppercase"
-                            >
-                              {tech}
+                        <div className="flex items-center gap-3">
+                          {project.systemImages && project.systemImages.length > 0 && (
+                            <span className="font-label text-[9px] tracking-widest text-zinc-600 uppercase flex items-center gap-1">
+                              <span className="material-symbols-outlined text-[11px]">photo_library</span>
+                              {project.systemImages.length}
                             </span>
-                          ))}
+                          )}
+                          <div className="flex flex-wrap gap-2 justify-end">
+                            {project.techStack.slice(0, 3).map((tech) => (
+                              <span
+                                key={tech}
+                                className="font-label text-[9px] tracking-widest text-zinc-700 uppercase"
+                              >
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
                         </div>
                       </div>
                     </div>

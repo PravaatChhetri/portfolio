@@ -20,6 +20,8 @@ export interface Project {
   category: string;
   techStack: string[];
   coverImage: string;
+  systemImages: string[];
+  systemDesignUrl?: string;
   liveUrl?: string;
   githubUrl?: string;
   featured: boolean;
@@ -92,6 +94,16 @@ function extractProperty(page: PageObjectResponse, key: string): any {
   }
 }
 
+function extractAllFiles(page: PageObjectResponse, key: string): string[] {
+  const prop = page.properties[key];
+  if (!prop || prop.type !== "files") return [];
+  return prop.files.map((file) => {
+    if (file.type === "file") return file.file.url;
+    if (file.type === "external") return file.external.url;
+    return "";
+  }).filter(Boolean);
+}
+
 // ─── FETCH PROJECTS ───
 export async function getProjects(): Promise<Project[]> {
   const dbId = process.env.NOTION_PROJECTS_DB;
@@ -118,6 +130,8 @@ export async function getProjects(): Promise<Project[]> {
         category: extractProperty(p, "Category") || "",
         techStack: extractProperty(p, "Tech Stack") || [],
         coverImage: extractProperty(p, "Cover") || "",
+        systemImages: extractAllFiles(p, "System Images"),
+        systemDesignUrl: extractProperty(p, "System Design URL") || "",
         liveUrl: extractProperty(p, "Live URL") || "",
         githubUrl: extractProperty(p, "GitHub URL") || "",
         featured: extractProperty(p, "Featured") || false,
@@ -249,6 +263,8 @@ function getFallbackProjects(): Project[] {
       category: "ENTERPRISE BANKING",
       techStack: ["Next.js", "Drizzle ORM", "MinIO", "Auth.js", "Docker", "Nginx"],
       coverImage: "",
+      systemImages: [],
+      systemDesignUrl: "",
       liveUrl: "",
       githubUrl: "",
       featured: true,
@@ -279,6 +295,8 @@ function getFallbackProjects(): Project[] {
       category: "AI PLATFORM",
       techStack: ["Next.js", "FastAPI", "Docker", "Pegasus", "Gemini AI"],
       coverImage: "",
+      systemImages: [],
+      systemDesignUrl: "",
       featured: true,
       order: 2,
       specs: {
@@ -307,6 +325,8 @@ function getFallbackProjects(): Project[] {
       category: "TOURISM PLATFORM",
       techStack: ["Next.js", "Notion CMS", "Tailwind", "Vercel", "SEO"],
       coverImage: "",
+      systemImages: [],
+      systemDesignUrl: "",
       featured: true,
       order: 3,
       specs: {
@@ -326,6 +346,8 @@ function getFallbackProjects(): Project[] {
       category: "FINTECH API",
       techStack: ["Node.js", "Redis", "Oracle", "Docker", "JWT"],
       coverImage: "",
+      systemImages: [],
+      systemDesignUrl: "",
       featured: false,
       order: 4,
       specs: {
@@ -345,6 +367,8 @@ function getFallbackProjects(): Project[] {
       category: "ENTERPRISE SYSTEM",
       techStack: ["Next.js", "PostgreSQL", "Prisma", "Docker", "Nginx"],
       coverImage: "",
+      systemImages: [],
+      systemDesignUrl: "",
       featured: false,
       order: 5,
       specs: {
@@ -364,6 +388,8 @@ function getFallbackProjects(): Project[] {
       category: "BROWSER EXTENSION",
       techStack: ["Chrome APIs", "TypeScript", "AES-GCM", "AI"],
       coverImage: "",
+      systemImages: [],
+      systemDesignUrl: "",
       featured: false,
       order: 6,
       specs: {

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useCallback, useEffect } from "react";
 import { Project } from "@/lib/notion";
 import { NotionBlockRenderer } from "@/components/NotionBlockRenderer";
 import {
@@ -9,7 +10,7 @@ import {
   AnimatedCounter,
   ParallaxSection,
 } from "@/components/Animations";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 
 export function CaseStudyContent({
@@ -19,6 +20,33 @@ export function CaseStudyContent({
   project: Project;
   blocks: any[];
 }) {
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  const closeLightbox = useCallback(() => setLightboxIndex(null), []);
+
+  const showPrev = useCallback(() => {
+    setLightboxIndex((i) =>
+      i !== null ? (i - 1 + project.systemImages.length) % project.systemImages.length : null
+    );
+  }, [project.systemImages.length]);
+
+  const showNext = useCallback(() => {
+    setLightboxIndex((i) =>
+      i !== null ? (i + 1) % project.systemImages.length : null
+    );
+  }, [project.systemImages.length]);
+
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowLeft") showPrev();
+      if (e.key === "ArrowRight") showNext();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [lightboxIndex, closeLightbox, showPrev, showNext]);
+
   return (
     <article className="min-h-screen bg-surface">
       {/* ─── HERO SECTION ─── */}
@@ -128,37 +156,59 @@ export function CaseStudyContent({
               </RevealOnScroll>
             </div>
 
-            {/* Architecture diagram placeholder */}
+            {/* System design — real link or placeholder */}
             <div className="md:col-span-7 flex items-center justify-center">
               <RevealOnScroll delay={0.2}>
-                <div className="w-full max-w-md aspect-square relative">
-                  {/* System diagram visualization */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-48 h-48 border border-zinc-800 flex items-center justify-center relative">
-                      <span className="font-mono text-xs text-zinc-600 uppercase tracking-wider">
-                        {project.title}
+                {project.systemDesignUrl ? (
+                  <a
+                    href={project.systemDesignUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group block w-full max-w-md border border-zinc-800 hover:border-zinc-600 transition-colors duration-300 p-8 relative"
+                  >
+                    {/* Corner markers */}
+                    <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-zinc-600" />
+                    <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-zinc-600" />
+                    <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-zinc-600" />
+                    <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-zinc-600" />
+
+                    <span className="font-label text-[9px] tracking-[0.4em] text-zinc-600 uppercase block mb-6">
+                      SYSTEM DESIGN
+                    </span>
+                    <p className="font-headline text-xl font-bold text-white uppercase tracking-tighter mb-6 group-hover:text-zinc-300 transition-colors">
+                      ARCHITECTURE_DIAGRAM
+                    </p>
+                    <p className="font-body text-xs text-zinc-600 leading-relaxed mb-8 break-all">
+                      {project.systemDesignUrl}
+                    </p>
+                    <div className="flex items-center gap-3">
+                      <span className="font-label text-[10px] tracking-widest text-zinc-500 uppercase group-hover:text-white transition-colors">
+                        OPEN DIAGRAM
                       </span>
-                      {/* Connection nodes */}
-                      <div className="absolute -top-4 left-1/2 -translate-x-1/2 font-label text-[9px] text-zinc-600 tracking-widest">
-                        CORE
-                      </div>
-                      <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 font-label text-[9px] text-zinc-600 tracking-widest">
-                        MEM
-                      </div>
-                      <div className="absolute top-1/2 -left-8 -translate-y-1/2 font-label text-[9px] text-zinc-600 tracking-widest">
-                        IO
-                      </div>
-                      <div className="absolute top-1/2 -right-8 -translate-y-1/2 font-label text-[9px] text-zinc-600 tracking-widest">
-                        NET
+                      <span className="material-symbols-outlined text-zinc-600 text-base group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all">
+                        arrow_outward
+                      </span>
+                    </div>
+                  </a>
+                ) : (
+                  <div className="w-full max-w-md aspect-square relative">
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-48 h-48 border border-zinc-800 flex items-center justify-center relative">
+                        <span className="font-mono text-xs text-zinc-600 uppercase tracking-wider">
+                          {project.title}
+                        </span>
+                        <div className="absolute -top-4 left-1/2 -translate-x-1/2 font-label text-[9px] text-zinc-600 tracking-widest">CORE</div>
+                        <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 font-label text-[9px] text-zinc-600 tracking-widest">MEM</div>
+                        <div className="absolute top-1/2 -left-8 -translate-y-1/2 font-label text-[9px] text-zinc-600 tracking-widest">IO</div>
+                        <div className="absolute top-1/2 -right-8 -translate-y-1/2 font-label text-[9px] text-zinc-600 tracking-widest">NET</div>
                       </div>
                     </div>
+                    <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-zinc-700" />
+                    <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-zinc-700" />
+                    <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-zinc-700" />
+                    <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-zinc-700" />
                   </div>
-                  {/* Corner markers */}
-                  <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-zinc-700" />
-                  <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-zinc-700" />
-                  <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-zinc-700" />
-                  <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-zinc-700" />
-                </div>
+                )}
               </RevealOnScroll>
             </div>
           </div>
@@ -195,6 +245,151 @@ export function CaseStudyContent({
               </div>
             </RevealOnScroll>
           </div>
+        </section>
+      )}
+
+      {/* ─── SYSTEM VIEW ─── */}
+      {project.systemImages && project.systemImages.length > 0 && (
+        <section className="bg-surface-container-lowest py-32 px-8 md:px-24">
+          <div className="max-w-[1440px] mx-auto">
+            <RevealOnScroll>
+              <div className="flex items-end justify-between mb-16">
+                <div>
+                  <span className="font-label text-[10px] tracking-[0.4em] text-zinc-600 uppercase block mb-3">
+                    {project.systemImages.length} SCREENSHOT{project.systemImages.length > 1 ? "S" : ""}
+                  </span>
+                  <h2 className="font-headline text-4xl md:text-5xl font-bold tracking-tighter uppercase">
+                    SYSTEM_VIEW
+                  </h2>
+                </div>
+                <span className="font-label text-[10px] tracking-widest text-zinc-700 uppercase hidden md:block">
+                  CLICK TO EXPAND
+                </span>
+              </div>
+            </RevealOnScroll>
+
+            {/* Gallery grid */}
+            <StaggerContainer
+              className={`grid gap-4 ${
+                project.systemImages.length === 1
+                  ? "grid-cols-1"
+                  : project.systemImages.length === 2
+                  ? "grid-cols-1 md:grid-cols-2"
+                  : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+              }`}
+              staggerDelay={0.08}
+            >
+              {project.systemImages.map((src, i) => (
+                <StaggerItem key={i}>
+                  <button
+                    onClick={() => setLightboxIndex(i)}
+                    className="group relative w-full overflow-hidden bg-zinc-900 block focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-600"
+                  >
+                    <div className={`relative ${project.systemImages.length === 1 ? "aspect-[16/9]" : "aspect-[4/3]"}`}>
+                      <img
+                        src={src}
+                        alt={`${project.title} system view ${i + 1}`}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+
+                      {/* Expand icon */}
+                      <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        <div className="bg-black/60 backdrop-blur-sm p-1.5">
+                          <span className="material-symbols-outlined text-white text-base">open_in_full</span>
+                        </div>
+                      </div>
+
+                      {/* Image counter */}
+                      <div className="absolute bottom-4 left-4">
+                        <span className="font-label text-[9px] tracking-widest text-zinc-500 uppercase bg-black/60 backdrop-blur-sm px-2 py-1">
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+                      </div>
+                    </div>
+                  </button>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+          </div>
+
+          {/* Lightbox */}
+          <AnimatePresence>
+            {lightboxIndex !== null && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="fixed inset-0 z-50 flex items-center justify-center bg-black/95"
+                onClick={closeLightbox}
+              >
+                {/* Close */}
+                <button
+                  onClick={closeLightbox}
+                  className="absolute top-6 right-6 z-10 text-zinc-400 hover:text-white transition-colors"
+                  aria-label="Close"
+                >
+                  <span className="material-symbols-outlined text-2xl">close</span>
+                </button>
+
+                {/* Counter */}
+                <span className="absolute top-6 left-6 font-label text-[10px] tracking-widest text-zinc-500 uppercase">
+                  {String(lightboxIndex + 1).padStart(2, "0")} / {String(project.systemImages.length).padStart(2, "0")}
+                </span>
+
+                {/* Image */}
+                <motion.div
+                  key={lightboxIndex}
+                  initial={{ opacity: 0, scale: 0.97 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.97 }}
+                  transition={{ duration: 0.2 }}
+                  className="relative max-w-6xl w-full mx-6"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <img
+                    src={project.systemImages[lightboxIndex]}
+                    alt={`${project.title} system view ${lightboxIndex + 1}`}
+                    className="w-full max-h-[80vh] object-contain"
+                  />
+                </motion.div>
+
+                {/* Prev / Next — only when multiple images */}
+                {project.systemImages.length > 1 && (
+                  <>
+                    <button
+                      onClick={(e) => { e.stopPropagation(); showPrev(); }}
+                      className="absolute left-4 md:left-8 text-zinc-400 hover:text-white transition-colors p-2"
+                      aria-label="Previous"
+                    >
+                      <span className="material-symbols-outlined text-3xl">arrow_back</span>
+                    </button>
+                    <button
+                      onClick={(e) => { e.stopPropagation(); showNext(); }}
+                      className="absolute right-4 md:right-8 text-zinc-400 hover:text-white transition-colors p-2"
+                      aria-label="Next"
+                    >
+                      <span className="material-symbols-outlined text-3xl">arrow_forward</span>
+                    </button>
+
+                    {/* Dot indicators */}
+                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
+                      {project.systemImages.map((_, i) => (
+                        <button
+                          key={i}
+                          onClick={(e) => { e.stopPropagation(); setLightboxIndex(i); }}
+                          className={`w-1.5 h-1.5 rounded-full transition-colors ${i === lightboxIndex ? "bg-white" : "bg-zinc-600 hover:bg-zinc-400"}`}
+                          aria-label={`View image ${i + 1}`}
+                        />
+                      ))}
+                    </div>
+                  </>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </section>
       )}
 
@@ -250,7 +445,7 @@ export function CaseStudyContent({
       {/* ─── LINKS & CTA ─── */}
       <section className="bg-surface-container-lowest py-24 px-8 md:px-24">
         <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row gap-8 items-center justify-between">
-          <div className="flex gap-6">
+          <div className="flex flex-wrap gap-4">
             {project.liveUrl && (
               <a
                 href={project.liveUrl}
@@ -274,6 +469,19 @@ export function CaseStudyContent({
                 SOURCE CODE
                 <span className="material-symbols-outlined text-base">
                   code
+                </span>
+              </a>
+            )}
+            {project.systemDesignUrl && (
+              <a
+                href={project.systemDesignUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-surface-container-highest text-white font-headline font-bold px-8 py-4 tracking-tighter uppercase text-sm hover:bg-surface-bright transition-colors ghost-border flex items-center gap-3"
+              >
+                SYSTEM DESIGN
+                <span className="material-symbols-outlined text-base">
+                  account_tree
                 </span>
               </a>
             )}
